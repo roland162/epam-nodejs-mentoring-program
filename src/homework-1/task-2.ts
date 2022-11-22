@@ -11,7 +11,7 @@ interface IBook {
 const csvPath = `${__dirname}/csv/task-2-data.csv`;
 const onError = (err) => console.log(err);
 const writeTxtStream = fs.createWriteStream("output.txt", {
-  flags: "a",
+  flags: "w",
   encoding: "utf8",
 });
 
