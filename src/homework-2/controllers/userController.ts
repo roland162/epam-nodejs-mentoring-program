@@ -15,7 +15,6 @@ export const getUserById = (req: Request, res: Response) => {
 };
 
 export const createUser = (req: Request, res: Response) => {
-  console.log(req.body);
   const { login, password, age } = req.body;
   const errors = validationResult(req);
   if (!login || !password || !age) {
@@ -57,7 +56,6 @@ export const updateUser = (req: Request, res: Response) => {
 
 export const deleteUser = (req: Request, res: Response) => {
   const { id } = req.params;
-  console.log(id);
   const user = users.find((user) => user.id === id);
   if (!user) {
     res.status(StatusCodes.NOT_FOUND).send("User not found");
@@ -69,11 +67,16 @@ export const deleteUser = (req: Request, res: Response) => {
 
 export const getAutoSuggestUsers = (req: Request, res: Response) => {
   const { loginSubstring, limit } = req.query;
+  console.log(req.query);
   const usersList = users
     .filter((user) => user.login.includes(loginSubstring))
     .sort((a, b) => a.login.localeCompare(b.login))
     .slice(0, limit);
-  res.status(StatusCodes.OK).json(usersList);
+  if(users.length) {
+	res.status(StatusCodes.OK).json(usersList);
+  } else {
+	res.status(StatusCodes.NOT_FOUND).send("Users not found for this query");
+  }
 };
 
 export const getUsers = (req: Request, res: Response) => {
