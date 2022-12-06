@@ -7,6 +7,7 @@ import createGroupModel from "./models/createGroupModel";
 import { Sequelize } from "sequelize";
 import createUserModel from "./models/createUserModel";
 import createUserGroupModel from "./models/createUserGroupModel";
+import { errorHandler } from "./middlewares/errorHandler";
 
 const app = express();
 const port = process.env.PORT || 4200;
@@ -16,6 +17,8 @@ app.use(express.json({ type: "application/vnd.api+json" }));
 app.use(cors());
 app.use("/users", userRouter);
 app.use("/groups", groupRouter);
+
+app.use(errorHandler);
 
 export const Group = createGroupModel(sequelize, Sequelize);
 export const User = createUserModel(sequelize, Sequelize);
