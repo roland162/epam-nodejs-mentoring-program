@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { validationResult } from "express-validator";
-import { Group, User } from "../server";
+import { Group } from "../server";
 
 
 export const getGroupById = async (req, res) => {

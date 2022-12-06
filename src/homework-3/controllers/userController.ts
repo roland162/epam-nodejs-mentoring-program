@@ -96,7 +96,6 @@ export const deleteUser = async (req: Request, res: Response) => {
 
 export const getAutoSuggestUsers = async (req: Request, res: Response) => {
   const { loginSubstring, limit } = req.query;
-  console.log(req.query);
   const { rows: users } = await dataBaseQuery(
     "SELECT * FROM users WHERE login LIKE $1",
     [`%${loginSubstring}%`]

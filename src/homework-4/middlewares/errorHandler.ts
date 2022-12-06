@@ -14,6 +14,12 @@ export const errorHandler = (
   const errMsg = err.message;
   res.status(errStatus).json({
     status: errStatus,
+	method: req.method,
+	arguments: {
+		...req.params,
+		...req.query,
+		...req.body,
+	},
     message: errMsg,
     error: err.stack,
   });

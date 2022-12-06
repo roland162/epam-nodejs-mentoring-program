@@ -11,6 +11,11 @@ import { errorHandler } from "./middlewares/errorHandler";
 
 const app = express();
 const port = process.env.PORT || 4200;
+
+process.on('unhandledRejection', (error: Error) => {
+  console.log('unhandledRejection', error.message);
+});
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.json({ type: "application/vnd.api+json" }));
