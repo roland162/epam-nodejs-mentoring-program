@@ -3,8 +3,7 @@ import { v4 as uuid } from "uuid";
 import { StatusCodes } from "http-status-codes";
 import { validationResult } from "express-validator";
 import { Op } from "sequelize";
-
-import { User, Group } from "../server";
+import { User } from "../server";
 
 export const getUserById = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -23,7 +22,7 @@ export const createUser = async (req: Request, res: Response) => {
     res.status(StatusCodes.BAD_REQUEST).send("Bad request");
   }
   if (!errors.isEmpty()) {
-    res.status(StatusCodes.BAD_REQUEST).send.json({ errors: errors.array() });
+    res.status(StatusCodes.BAD_REQUEST).json({ errors: errors.array() });
   } else {
     const generatedID = uuid();
     await User.create({
@@ -44,7 +43,7 @@ export const updateUser = async (req: Request, res: Response) => {
   const { login, password, age } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    res.status(StatusCodes.BAD_REQUEST).send.json({ errors: errors.array() });
+    res.status(StatusCodes.BAD_REQUEST).json({ errors: errors.array() });
   } else {
     const user = await User.findByPk(id);
     if (!user) {

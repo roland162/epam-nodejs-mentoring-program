@@ -67,7 +67,6 @@ export const deleteUser = (req: Request, res: Response) => {
 
 export const getAutoSuggestUsers = (req: Request, res: Response) => {
   const { loginSubstring, limit } = req.query;
-  console.log(req.query);
   const usersList = users
     .filter((user) => user.login.includes(loginSubstring))
     .sort((a, b) => a.login.localeCompare(b.login))
