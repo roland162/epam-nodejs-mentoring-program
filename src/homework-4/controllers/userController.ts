@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { v4 as uuid } from "uuid";
+import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
 import { validationResult } from "express-validator";
 import { Op } from "sequelize";
@@ -89,4 +90,22 @@ export const getAutoSuggestUsers = async (req: Request, res: Response) => {
 export const getUsers = async (req: Request, res: Response) => {
   const users = await User.findAll();
   res.status(StatusCodes.OK).send(users);
+};
+
+export const userLogin = async (req, res) => {
+  const { login, password } = req.body;
+  const allUsers = await User.findAll();
+  const user = allUsers.find((user) => user.login === login);
+  if (!user) {
+    res.status(404).send("No user exists with this login");
+  } else {
+    if (user.password === password) {
+      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+        expiresIn: "1h",
+      });
+      res.status(200).send({ token });
+    } else {
+      res.status(401).send("Unauthorized");
+    }
+  }
 };
