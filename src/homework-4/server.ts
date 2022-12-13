@@ -9,8 +9,10 @@ import createUserModel from "./models/createUserModel";
 import createUserGroupModel from "./models/createUserGroupModel";
 import { logger } from "./middlewares/logger";
 import { authorizationHandlerMiddleware } from "./middlewares/authorizationHandler";
+import dotenv from "dotenv";
 
-const app = express();
+dotenv.config();
+export const app = express();
 const port = process.env.PORT || 4200;
 
 process.on("unhandledRejection", (error: Error) => {
