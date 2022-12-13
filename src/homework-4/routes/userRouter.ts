@@ -6,6 +6,7 @@ import {
   getUserById,
   getUsers,
   updateUser,
+  userLogin,
 } from "../controllers/userController";
 
 export const userRouter = Router();
@@ -15,5 +16,6 @@ userRouter.post("/", createUser);
 userRouter.put("/:id", updateUser);
 userRouter.delete("/:id", deleteUser);
 userRouter.get("/", getUsers);
+userRouter.post("/login", userLogin);
 
 
